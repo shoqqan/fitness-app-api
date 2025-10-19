@@ -1,12 +1,14 @@
-package dev.shoqan.fitness_app.infrastructure.persistence.jpa
+package dev.shoqan.fitness_app.domain.repository
 
 import dev.shoqan.fitness_app.infrastructure.persistence.entity.SetEntity
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.stereotype.Repository
 import java.util.UUID
 
-@Repository
-interface SetJpaRepository : JpaRepository<SetEntity, UUID> {
+interface SetRepository {
+    fun findById(id: UUID): SetEntity?
+    fun findAll(): List<SetEntity>
     fun findByWorkoutExerciseId(workoutExerciseId: UUID): List<SetEntity>
     fun findByWorkoutExerciseIdOrderByOrderIndexAsc(workoutExerciseId: UUID): List<SetEntity>
+    fun save(set: SetEntity): SetEntity
+    fun deleteById(id: UUID)
+    fun existsById(id: UUID): Boolean
 }
