@@ -1,5 +1,6 @@
 package dev.shoqan.fitness_app.infrastructure.persistence.entity
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -11,16 +12,17 @@ import java.time.OffsetDateTime
 
 @Entity
 @Table(name = "workouts")
-data class WorkoutEntity(
+class WorkoutEntity(
     @Column(nullable = false)
-    val title: String,
+    var title: String,
+
     @Column(nullable = false)
-    val date: OffsetDateTime,
-    @OneToMany(mappedBy = "workout")
-    @Column
-    val exercizes: MutableList<ExercizeEntity> = mutableListOf(),
-    @Column(nullable = false)
+    var date: OffsetDateTime,
+
+    @OneToMany(mappedBy = "workout", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var exercises: MutableList<WorkoutExerciseEntity> = mutableListOf(),
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    var user: UserEntity,
-): BaseEntity()
+    var user: UserEntity
+) : BaseEntity()

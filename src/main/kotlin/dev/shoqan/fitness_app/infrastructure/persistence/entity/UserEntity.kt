@@ -9,10 +9,13 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "users")
-data class UserEntity (
+class UserEntity(
     @Column(unique = true, nullable = false)
-    val username: String,
-    val password: String,
-    @OneToMany(mappedBy="user", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY )
-    val workouts: MutableList<WorkoutEntity> = mutableListOf(),
-): BaseEntity()
+    var username: String,
+
+    @Column(nullable = false)
+    var password: String,
+
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var workouts: MutableList<WorkoutEntity> = mutableListOf()
+) : BaseEntity()

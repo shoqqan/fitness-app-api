@@ -9,12 +9,17 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "sets")
-data class SetEntity(
+class SetEntity(
     @Column(nullable = false)
-    val weight: Double = 0.0,
+    var weight: Double = 0.0,
+
     @Column(nullable = false)
-    val reps: Int = 0,
+    var reps: Int = 0,
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exercize_id", nullable = false)
-    var exercize: ExercizeEntity,
-): BaseEntity()
+    @JoinColumn(name = "workout_exercise_id", nullable = false)
+    var workoutExercise: WorkoutExerciseEntity,
+
+    @Column(nullable = false)
+    var orderIndex: Int = 0
+) : BaseEntity()
