@@ -1,6 +1,6 @@
-package dev.shoqan.fitness_app.infrastructure.persistence.jpa
+package dev.shoqan.fitness_app.repositories
 
-import dev.shoqan.fitness_app.infrastructure.persistence.entity.WorkoutExerciseEntity
+import dev.shoqan.fitness_app.entities.WorkoutExerciseEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID

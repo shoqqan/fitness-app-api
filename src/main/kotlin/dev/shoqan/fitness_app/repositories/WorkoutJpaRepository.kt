@@ -1,6 +1,6 @@
-package dev.shoqan.fitness_app.infrastructure.persistence.jpa
+package dev.shoqan.fitness_app.repositories
 
-import dev.shoqan.fitness_app.infrastructure.persistence.entity.WorkoutEntity
+import dev.shoqan.fitness_app.entities.WorkoutEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.time.OffsetDateTime

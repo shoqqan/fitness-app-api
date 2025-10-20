@@ -1,4 +1,4 @@
-package dev.shoqan.fitness_app.infrastructure.persistence.entity
+package dev.shoqan.fitness_app.entities
 
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners
