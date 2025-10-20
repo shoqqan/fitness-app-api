@@ -108,7 +108,7 @@ class SetController(
         var deletedCount = 0
 
         sets.forEach { set ->
-            setService.deleteById(set.id)
+            setService.deleteById(set.id!!)
             deletedCount++
         }
 
