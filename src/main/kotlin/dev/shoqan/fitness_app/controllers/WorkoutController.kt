@@ -9,6 +9,9 @@ import dev.shoqan.fitness_app.mappers.toResponse
 import dev.shoqan.fitness_app.mappers.toSummaryResponse
 import dev.shoqan.fitness_app.services.UserService
 import dev.shoqan.fitness_app.services.WorkoutService
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
@@ -19,6 +22,8 @@ import java.util.UUID
 
 @RestController
 @RequestMapping("/api/workouts")
+@Tag(name = "Workouts", description = "API для управления тренировками")
+@SecurityRequirement(name = "bearerAuth")
 class WorkoutController(
     private val workoutService: WorkoutService,
     private val userService: UserService
