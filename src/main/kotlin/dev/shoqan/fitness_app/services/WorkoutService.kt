@@ -1,14 +1,14 @@
 package dev.shoqan.fitness_app.services
 
 import dev.shoqan.fitness_app.entities.WorkoutEntity
-import dev.shoqan.fitness_app.repositories.WorkoutJpaRepository
+import dev.shoqan.fitness_app.repositories.WorkoutRepository
 import org.springframework.stereotype.Component
 import java.time.OffsetDateTime
 import java.util.UUID
 
 @Component
 class WorkoutService(
-    private val jpaRepository: WorkoutJpaRepository
+    private val jpaRepository: WorkoutRepository
 )  {
 
      fun findById(id: UUID): WorkoutEntity? {

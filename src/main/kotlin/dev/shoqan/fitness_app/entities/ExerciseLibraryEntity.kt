@@ -19,8 +19,6 @@ class ExerciseLibraryEntity(
     @Column
     var muscleGroup: String? = null,
 
-    @Column
-    var category: String? = null,
 
     @Column(nullable = false)
     var isCustom: Boolean = false,

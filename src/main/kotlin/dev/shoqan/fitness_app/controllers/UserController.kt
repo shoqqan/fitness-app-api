@@ -4,7 +4,6 @@ import dev.shoqan.fitness_app.dto.CreateUserRequest
 import dev.shoqan.fitness_app.dto.UpdateUserRequest
 import dev.shoqan.fitness_app.dto.UserResponse
 import dev.shoqan.fitness_app.entities.UserEntity
-import dev.shoqan.fitness_app.mappers.toResponse
 import dev.shoqan.fitness_app.services.UserService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -93,4 +92,11 @@ class UserController(
         val exists = userService.existsById(id)
         return ResponseEntity.ok(mapOf("exists" to exists))
     }
+
+    private fun UserEntity.toResponse(): UserResponse = UserResponse(
+        id = this.id!!,
+        username = this.username,
+        createdAt = this.createdAt!!,
+        updatedAt = this.updatedAt!!
+    )
 }

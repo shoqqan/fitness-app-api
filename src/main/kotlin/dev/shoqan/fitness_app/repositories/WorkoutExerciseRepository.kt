@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface WorkoutExerciseJpaRepository : JpaRepository<WorkoutExerciseEntity, UUID> {
+interface WorkoutExerciseRepository : JpaRepository<WorkoutExerciseEntity, UUID> {
     fun findByWorkoutId(workoutId: UUID): List<WorkoutExerciseEntity>
-    fun findByWorkoutIdOrderByOrderIndexAsc(workoutId: UUID): List<WorkoutExerciseEntity>
-    fun findByExerciseLibraryId(exerciseLibraryId: UUID): List<WorkoutExerciseEntity>
 }

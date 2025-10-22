@@ -9,7 +9,6 @@ data class ExerciseLibraryResponse(
     val name: String,
     val description: String?,
     val muscleGroup: String?,
-    val category: String?,
     val isCustom: Boolean,
     val isPublic: Boolean,
     val createdById: UUID?,

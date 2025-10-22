@@ -4,7 +4,7 @@ import dev.shoqan.fitness_app.dto.CreateSetRequest
 import dev.shoqan.fitness_app.dto.SetResponse
 import dev.shoqan.fitness_app.dto.UpdateSetRequest
 import dev.shoqan.fitness_app.entities.SetEntity
-import dev.shoqan.fitness_app.mappers.toResponse
+import dev.shoqan.fitness_app.extensions.getCurrentUsername
 import dev.shoqan.fitness_app.services.SetService
 import dev.shoqan.fitness_app.services.WorkoutExerciseService
 import jakarta.validation.Valid
@@ -37,9 +37,16 @@ class SetController(
 
     @PostMapping
     fun createSet(@Valid @RequestBody request: CreateSetRequest): ResponseEntity<SetResponse> {
+        val currentUsername = getCurrentUsername()
+
         // Verify workout exercise exists
         val workoutExercise = workoutExerciseService.findById(request.workoutExerciseId)
             ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+
+        // Check if the workout belongs to the current user
+        if (workoutExercise.workout.user.username != currentUsername) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build()
+        }
 
         val set = SetEntity(
             workoutExercise = workoutExercise,
@@ -56,10 +63,17 @@ class SetController(
     fun createMultipleSets(
         @Valid @RequestBody requests: List<CreateSetRequest>
     ): ResponseEntity<List<SetResponse>> {
+        val currentUsername = getCurrentUsername()
+
         val sets = requests.mapIndexed { index, request ->
             // Verify workout exercise exists
             val workoutExercise = workoutExerciseService.findById(request.workoutExerciseId)
                 ?: throw IllegalArgumentException("Workout exercise not found: ${request.workoutExerciseId}")
+
+            // Check if the workout belongs to the current user
+            if (workoutExercise.workout.user.username != currentUsername) {
+                throw IllegalArgumentException("Access denied to workout exercise: ${request.workoutExerciseId}")
+            }
 
             SetEntity(
                 workoutExercise = workoutExercise,
@@ -79,8 +93,14 @@ class SetController(
         @PathVariable id: UUID,
         @Valid @RequestBody request: UpdateSetRequest
     ): ResponseEntity<SetResponse> {
+        val currentUsername = getCurrentUsername()
         val existingSet = setService.findById(id)
             ?: return ResponseEntity.notFound().build()
+
+        // Check if the workout belongs to the current user
+        if (existingSet.workoutExercise.workout.user.username != currentUsername) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build()
+        }
 
         // Update fields if provided
         request.weight?.let { existingSet.weight = it }
@@ -92,8 +112,13 @@ class SetController(
 
     @DeleteMapping("/{id}")
     fun deleteSet(@PathVariable id: UUID): ResponseEntity<Void> {
-        if (!setService.existsById(id)) {
-            return ResponseEntity.notFound().build()
+        val currentUsername = getCurrentUsername()
+        val set = setService.findById(id)
+            ?: return ResponseEntity.notFound().build()
+
+        // Check if the workout belongs to the current user
+        if (set.workoutExercise.workout.user.username != currentUsername) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build()
         }
 
         setService.deleteById(id)
@@ -104,6 +129,15 @@ class SetController(
     fun deleteAllSetsForWorkoutExercise(
         @PathVariable workoutExerciseId: UUID
     ): ResponseEntity<Map<String, Int>> {
+        val currentUsername = getCurrentUsername()
+        val workoutExercise = workoutExerciseService.findById(workoutExerciseId)
+            ?: return ResponseEntity.notFound().build()
+
+        // Check if the workout belongs to the current user
+        if (workoutExercise.workout.user.username != currentUsername) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build()
+        }
+
         val sets = setService.findByWorkoutExerciseId(workoutExerciseId)
         var deletedCount = 0
 
@@ -114,4 +148,14 @@ class SetController(
 
         return ResponseEntity.ok(mapOf("deletedCount" to deletedCount))
     }
+
+    fun SetEntity.toResponse(): SetResponse = SetResponse(
+        id = this.id,
+        weight = this.weight,
+        reps = this.reps,
+        workoutExerciseId = this.workoutExercise.id,
+        orderIndex = this.orderIndex,
+        createdAt = this.createdAt!!,
+        updatedAt = this.updatedAt!!
+    )
 }

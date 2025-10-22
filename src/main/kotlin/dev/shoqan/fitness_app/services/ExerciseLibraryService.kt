@@ -18,26 +18,6 @@ class ExerciseLibraryService(
         return jpaRepository.findAll()
     }
 
-    fun findByNameIgnoreCase(name: String): ExerciseLibraryEntity? {
-        return jpaRepository.findByNameIgnoreCase(name)
-    }
-
-    fun findByNameContainingIgnoreCase(query: String): List<ExerciseLibraryEntity> {
-        return jpaRepository.findByNameContainingIgnoreCase(query)
-    }
-
-     fun findByMuscleGroup(muscleGroup: String): List<ExerciseLibraryEntity> {
-        return jpaRepository.findByMuscleGroup(muscleGroup)
-    }
-
-    fun findByIsCustomFalse(): List<ExerciseLibraryEntity> {
-        return jpaRepository.findByIsCustomFalse()
-    }
-
-    fun findByCreatedById(userId: UUID): List<ExerciseLibraryEntity> {
-        return jpaRepository.findByCreatedById(userId)
-    }
-
     fun searchAvailableExercises(userId: UUID, query: String): List<ExerciseLibraryEntity> {
         return jpaRepository.searchAvailableExercises(userId, query)
     }

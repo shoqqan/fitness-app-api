@@ -1,13 +1,13 @@
 package dev.shoqan.fitness_app.services
 
 import dev.shoqan.fitness_app.entities.UserEntity
-import dev.shoqan.fitness_app.repositories.UserJpaRepository
+import dev.shoqan.fitness_app.repositories.UserRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
 class UserService(
-    private val jpaRepository: UserJpaRepository
+    private val jpaRepository: UserRepository
 )  {
 
      fun findById(id: UUID): UserEntity? {

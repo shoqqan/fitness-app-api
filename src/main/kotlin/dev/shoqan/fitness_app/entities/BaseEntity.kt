@@ -17,13 +17,13 @@ import java.util.UUID
 abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    open var id: UUID? = null
+    var id: UUID = UUID.randomUUID()
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    open var createdAt: OffsetDateTime? = null
+    var createdAt: OffsetDateTime? = null
 
     @LastModifiedDate
     @Column(nullable = false)
-    open var updatedAt: OffsetDateTime? = null
+     var updatedAt: OffsetDateTime? = null
 }

@@ -17,7 +17,7 @@ data class SetResponse(
 
 data class CreateSetRequest(
     @field:NotNull(message = "Workout Exercise ID is required")
-    val workoutExerciseId: UUID,
+    var workoutExerciseId: UUID,
 
     @field:Min(value = 0, message = "Weight cannot be negative")
     val weight: Double = 0.0,

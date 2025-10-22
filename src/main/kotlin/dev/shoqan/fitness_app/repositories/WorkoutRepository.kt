@@ -7,7 +7,7 @@ import java.time.OffsetDateTime
 import java.util.UUID
 
 @Repository
-interface WorkoutJpaRepository : JpaRepository<WorkoutEntity, UUID> {
+interface WorkoutRepository : JpaRepository<WorkoutEntity, UUID> {
     fun findByUserId(userId: UUID): List<WorkoutEntity>
     fun findByUserIdOrderByDateDesc(userId: UUID): List<WorkoutEntity>
     fun findByUserIdAndDateBetween(userId: UUID, startDate: OffsetDateTime, endDate: OffsetDateTime): List<WorkoutEntity>

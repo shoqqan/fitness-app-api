@@ -4,8 +4,7 @@ import dev.shoqan.fitness_app.dto.CreateWorkoutExerciseRequest
 import dev.shoqan.fitness_app.dto.UpdateWorkoutExerciseRequest
 import dev.shoqan.fitness_app.dto.WorkoutExerciseResponse
 import dev.shoqan.fitness_app.entities.WorkoutExerciseEntity
-import dev.shoqan.fitness_app.mappers.toResponse
-import dev.shoqan.fitness_app.services.ExerciseLibraryService
+import dev.shoqan.fitness_app.extensions.getCurrentUsername
 import dev.shoqan.fitness_app.services.WorkoutExerciseService
 import dev.shoqan.fitness_app.services.WorkoutService
 import jakarta.validation.Valid
@@ -19,7 +18,6 @@ import java.util.UUID
 class WorkoutExerciseController(
     private val workoutExerciseService: WorkoutExerciseService,
     private val workoutService: WorkoutService,
-    private val exerciseLibraryService: ExerciseLibraryService
 ) {
 
     @GetMapping("/{id}")
@@ -33,15 +31,7 @@ class WorkoutExerciseController(
     fun getWorkoutExercisesByWorkoutId(
         @PathVariable workoutId: UUID
     ): ResponseEntity<List<WorkoutExerciseResponse>> {
-        val exercises = workoutExerciseService.findByWorkoutIdOrderByOrderIndexAsc(workoutId)
-        return ResponseEntity.ok(exercises.map { it.toResponse() })
-    }
-
-    @GetMapping("/exercise-library/{exerciseLibraryId}")
-    fun getWorkoutExercisesByExerciseLibraryId(
-        @PathVariable exerciseLibraryId: UUID
-    ): ResponseEntity<List<WorkoutExerciseResponse>> {
-        val exercises = workoutExerciseService.findByExerciseLibraryId(exerciseLibraryId)
+        val exercises = workoutExerciseService.findByWorkoutId(workoutId)
         return ResponseEntity.ok(exercises.map { it.toResponse() })
     }
 
@@ -49,19 +39,20 @@ class WorkoutExerciseController(
     fun createWorkoutExercise(
         @Valid @RequestBody request: CreateWorkoutExerciseRequest
     ): ResponseEntity<WorkoutExerciseResponse> {
-        // Verify workout exists
+        val currentUsername = getCurrentUsername()
+
         val workout = workoutService.findById(request.workoutId)
             ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
 
-        // Verify exercise library entry exists
-        val exerciseLibrary = exerciseLibraryService.findById(request.exerciseLibraryId)
-            ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+        // Check if the workout belongs to the current user
+        if (workout.user.username != currentUsername) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build()
+        }
 
         val workoutExercise = WorkoutExerciseEntity(
+            name = request.name,
             workout = workout,
-            exerciseLibrary = exerciseLibrary,
-            restSeconds = request.restSeconds,
-            orderIndex = request.orderIndex
+            restSeconds = request.restSeconds
         )
 
         val savedWorkoutExercise = workoutExerciseService.save(workoutExercise)
@@ -74,12 +65,15 @@ class WorkoutExerciseController(
         @PathVariable id: UUID,
         @Valid @RequestBody request: UpdateWorkoutExerciseRequest
     ): ResponseEntity<WorkoutExerciseResponse> {
+        val currentUsername = getCurrentUsername()
         val existingWorkoutExercise = workoutExerciseService.findById(id)
             ?: return ResponseEntity.notFound().build()
 
-        // Update fields if provided
+        if (existingWorkoutExercise.workout.user.username != currentUsername) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build()
+        }
+
         request.restSeconds?.let { existingWorkoutExercise.restSeconds = it }
-        request.orderIndex?.let { existingWorkoutExercise.orderIndex = it }
 
         val updatedWorkoutExercise = workoutExerciseService.save(existingWorkoutExercise)
         return ResponseEntity.ok(updatedWorkoutExercise.toResponse())
@@ -87,25 +81,25 @@ class WorkoutExerciseController(
 
     @DeleteMapping("/{id}")
     fun deleteWorkoutExercise(@PathVariable id: UUID): ResponseEntity<Void> {
-        if (!workoutExerciseService.existsById(id)) {
-            return ResponseEntity.notFound().build()
+        val currentUsername = getCurrentUsername()
+        val workoutExercise = workoutExerciseService.findById(id)
+            ?: return ResponseEntity.notFound().build()
+
+        // Check if the workout belongs to the current user
+        if (workoutExercise.workout.user.username != currentUsername) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build()
         }
 
         workoutExerciseService.deleteById(id)
         return ResponseEntity.noContent().build()
     }
 
-    @GetMapping("/{id}/metrics")
-    fun getWorkoutExerciseMetrics(@PathVariable id: UUID): ResponseEntity<Map<String, Any>> {
-        val workoutExercise = workoutExerciseService.findById(id)
-            ?: return ResponseEntity.notFound().build()
-
-        val metrics = mapOf(
-            "totalVolume" to workoutExercise.getTotalVolume(),
-            "totalReps" to workoutExercise.getTotalReps(),
-            "setCount" to workoutExercise.sets.size
-        )
-
-        return ResponseEntity.ok(metrics)
-    }
+    private fun WorkoutExerciseEntity.toResponse(): WorkoutExerciseResponse = WorkoutExerciseResponse(
+        id = this.id,
+        name = this.name,
+        workoutId = this.workout.id,
+        restSeconds = this.restSeconds,
+        createdAt = this.createdAt!!,
+        updatedAt = this.updatedAt!!
+    )
 }

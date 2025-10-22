@@ -1,13 +1,13 @@
 package dev.shoqan.fitness_app.services
 
 import dev.shoqan.fitness_app.entities.WorkoutExerciseEntity
-import dev.shoqan.fitness_app.repositories.WorkoutExerciseJpaRepository
+import dev.shoqan.fitness_app.repositories.WorkoutExerciseRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
 class WorkoutExerciseService(
-    private val jpaRepository: WorkoutExerciseJpaRepository
+    private val jpaRepository: WorkoutExerciseRepository
 )  {
 
     fun findById(id: UUID): WorkoutExerciseEntity? {
@@ -20,14 +20,6 @@ class WorkoutExerciseService(
 
      fun findByWorkoutId(workoutId: UUID): List<WorkoutExerciseEntity> {
         return jpaRepository.findByWorkoutId(workoutId)
-    }
-
-     fun findByWorkoutIdOrderByOrderIndexAsc(workoutId: UUID): List<WorkoutExerciseEntity> {
-        return jpaRepository.findByWorkoutIdOrderByOrderIndexAsc(workoutId)
-    }
-
-    fun findByExerciseLibraryId(exerciseLibraryId: UUID): List<WorkoutExerciseEntity> {
-        return jpaRepository.findByExerciseLibraryId(exerciseLibraryId)
     }
 
     fun save(workoutExercise: WorkoutExerciseEntity): WorkoutExerciseEntity {

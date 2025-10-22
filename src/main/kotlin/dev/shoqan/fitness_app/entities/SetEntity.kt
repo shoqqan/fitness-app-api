@@ -14,7 +14,7 @@ class SetEntity(
     var weight: Double = 0.0,
 
     @Column(nullable = false)
-    var reps: Int = 0,
+    var reps: Int = 8,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workout_exercise_id", nullable = false)
