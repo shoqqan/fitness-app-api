@@ -1,5 +1,7 @@
-package dev.shoqan.fitness_app.entities
+package dev.shoqan.fitness_app.set
 
+import dev.shoqan.fitness_app.entities.BaseEntity
+import dev.shoqan.fitness_app.workout_exercise.WorkoutExerciseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType

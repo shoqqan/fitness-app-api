@@ -1,6 +1,6 @@
 package dev.shoqan.fitness_app.auth
 
-import dev.shoqan.fitness_app.repositories.UserRepository
+import dev.shoqan.fitness_app.user.UserRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails

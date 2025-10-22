@@ -1,4 +1,4 @@
-package dev.shoqan.fitness_app.dto
+package dev.shoqan.fitness_app.set
 
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotNull

@@ -1,6 +1,6 @@
-package dev.shoqan.fitness_app.repositories
+package dev.shoqan.fitness_app.workout_exercise
 
-import dev.shoqan.fitness_app.entities.WorkoutExerciseEntity
+import dev.shoqan.fitness_app.workout_exercise.WorkoutExerciseEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID

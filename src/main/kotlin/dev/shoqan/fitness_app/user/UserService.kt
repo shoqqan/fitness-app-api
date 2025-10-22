@@ -1,7 +1,5 @@
-package dev.shoqan.fitness_app.services
+package dev.shoqan.fitness_app.user
 
-import dev.shoqan.fitness_app.entities.UserEntity
-import dev.shoqan.fitness_app.repositories.UserRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 

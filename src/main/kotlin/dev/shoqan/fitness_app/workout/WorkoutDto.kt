@@ -1,5 +1,6 @@
-package dev.shoqan.fitness_app.dto
+package dev.shoqan.fitness_app.workout
 
+import dev.shoqan.fitness_app.workout_exercise.WorkoutExerciseResponse
 import jakarta.validation.constraints.NotBlank
 import java.time.OffsetDateTime
 import java.util.UUID

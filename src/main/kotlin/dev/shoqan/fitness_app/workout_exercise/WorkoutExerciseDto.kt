@@ -1,5 +1,6 @@
-package dev.shoqan.fitness_app.dto
+package dev.shoqan.fitness_app.workout_exercise
 
+import dev.shoqan.fitness_app.set.SetResponse
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotNull
 import java.time.OffsetDateTime

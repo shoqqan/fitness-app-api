@@ -1,4 +1,4 @@
-package dev.shoqan.fitness_app.dto
+package dev.shoqan.fitness_app.user
 
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size

@@ -1,7 +1,7 @@
-package dev.shoqan.fitness_app.services
+package dev.shoqan.fitness_app.workout
 
-import dev.shoqan.fitness_app.entities.WorkoutEntity
-import dev.shoqan.fitness_app.repositories.WorkoutRepository
+import dev.shoqan.fitness_app.workout.WorkoutEntity
+import dev.shoqan.fitness_app.workout.WorkoutRepository
 import org.springframework.stereotype.Component
 import java.time.OffsetDateTime
 import java.util.UUID

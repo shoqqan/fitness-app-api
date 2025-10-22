@@ -1,6 +1,6 @@
 package dev.shoqan.fitness_app.extensions
 
-import dev.shoqan.fitness_app.entities.UserEntity
+import dev.shoqan.fitness_app.user.UserEntity
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.User
 
@@ -14,6 +14,8 @@ fun getCurrentUsername(): String {
         is String -> principal
         else -> throw IllegalStateException("Unable to extract username from authentication")
     }
+
+
 }
 
 /**

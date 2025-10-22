@@ -1,16 +1,18 @@
-package dev.shoqan.fitness_app.controllers
+package dev.shoqan.fitness_app.workout_exercise
 
-import dev.shoqan.fitness_app.dto.CreateWorkoutExerciseRequest
-import dev.shoqan.fitness_app.dto.UpdateWorkoutExerciseRequest
-import dev.shoqan.fitness_app.dto.WorkoutExerciseResponse
-import dev.shoqan.fitness_app.entities.WorkoutExerciseEntity
 import dev.shoqan.fitness_app.extensions.getCurrentUsername
-import dev.shoqan.fitness_app.services.WorkoutExerciseService
-import dev.shoqan.fitness_app.services.WorkoutService
+import dev.shoqan.fitness_app.workout.WorkoutService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
@@ -95,9 +97,9 @@ class WorkoutExerciseController(
     }
 
     private fun WorkoutExerciseEntity.toResponse(): WorkoutExerciseResponse = WorkoutExerciseResponse(
-        id = this.id,
+        id = this.id!!,
         name = this.name,
-        workoutId = this.workout.id,
+        workoutId = this.workout.id!!,
         restSeconds = this.restSeconds,
         createdAt = this.createdAt!!,
         updatedAt = this.updatedAt!!

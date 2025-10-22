@@ -2,8 +2,8 @@ package dev.shoqan.fitness_app.controllers
 
 
 import dev.shoqan.fitness_app.auth.JwtUtil
-import dev.shoqan.fitness_app.entities.UserEntity
-import dev.shoqan.fitness_app.services.UserService
+import dev.shoqan.fitness_app.user.UserEntity
+import dev.shoqan.fitness_app.user.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema

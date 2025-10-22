@@ -17,7 +17,7 @@ import java.util.UUID
 abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    var id: UUID = UUID.randomUUID()
+    var id: UUID? = null
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -25,5 +25,5 @@ abstract class BaseEntity {
 
     @LastModifiedDate
     @Column(nullable = false)
-     var updatedAt: OffsetDateTime? = null
+    var updatedAt: OffsetDateTime? = null
 }

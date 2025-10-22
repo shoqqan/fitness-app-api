@@ -1,6 +1,5 @@
-package dev.shoqan.fitness_app.repositories
+package dev.shoqan.fitness_app.set
 
-import dev.shoqan.fitness_app.entities.SetEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID
