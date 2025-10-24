@@ -1,4 +1,4 @@
-package dev.shoqan.fitness_app.extensions
+package dev.shoqan.fitness_app.lib
 
 import dev.shoqan.fitness_app.user.UserEntity
 import org.springframework.security.core.context.SecurityContextHolder

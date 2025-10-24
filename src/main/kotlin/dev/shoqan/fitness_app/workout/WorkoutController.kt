@@ -1,6 +1,6 @@
 package dev.shoqan.fitness_app.workout
 
-import dev.shoqan.fitness_app.extensions.getCurrentUsername
+import dev.shoqan.fitness_app.lib.getCurrentUsername
 import dev.shoqan.fitness_app.user.UserService
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -27,6 +27,17 @@ class WorkoutController(
     private val userService: UserService
 ) {
 
+
+
+    @GetMapping
+    fun getWorkouts(): ResponseEntity<List<WorkoutResponse>> {
+        val currentUsername = getCurrentUsername()
+        val user = userService.findByUsername(currentUsername)
+            ?: throw IllegalStateException("Authenticated user not found: $currentUsername")
+
+        val workouts = workoutService.findByUserId(user.id!!)
+        return ResponseEntity.ok(workouts.map { it.toResponse() })
+    }
 //    @GetMapping
 //    fun getAllWorkouts() {
 //        val workouts = workoutService.findAll()

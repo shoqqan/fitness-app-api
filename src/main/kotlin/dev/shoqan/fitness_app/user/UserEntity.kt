@@ -1,6 +1,6 @@
 package dev.shoqan.fitness_app.user
 
-import dev.shoqan.fitness_app.entities.BaseEntity
+import dev.shoqan.fitness_app.shared.BaseEntity
 import dev.shoqan.fitness_app.workout.WorkoutEntity
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column

@@ -1,4 +1,4 @@
-package dev.shoqan.fitness_app.entities
+package dev.shoqan.fitness_app.shared
 
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners

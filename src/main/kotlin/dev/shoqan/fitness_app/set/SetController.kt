@@ -1,6 +1,6 @@
 package dev.shoqan.fitness_app.set
 
-import dev.shoqan.fitness_app.extensions.getCurrentUsername
+import dev.shoqan.fitness_app.lib.getCurrentUsername
 import dev.shoqan.fitness_app.workout_exercise.WorkoutExerciseService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
