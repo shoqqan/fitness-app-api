@@ -29,9 +29,7 @@ data class CreateWorkoutExerciseRequest(
 )
 
 data class UpdateWorkoutExerciseRequest(
-    @field:Min(value = 0, message = "Rest seconds cannot be negative")
+    var name: String?,
     val restSeconds: Int?,
 
-    @field:Min(value = 0, message = "Order index cannot be negative")
-    val orderIndex: Int?
 )

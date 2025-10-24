@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -33,6 +34,9 @@ class WorkoutExerciseController(
     fun getWorkoutExercisesByWorkoutId(
         @PathVariable workoutId: UUID
     ): ResponseEntity<List<WorkoutExerciseResponse>> {
+        if (!workoutService.existsById(workoutId)) {
+            return ResponseEntity.notFound().build()
+        }
         val exercises = workoutExerciseService.findByWorkoutId(workoutId)
         return ResponseEntity.ok(exercises.map { it.toResponse() })
     }
@@ -62,7 +66,9 @@ class WorkoutExerciseController(
             .body(savedWorkoutExercise.toResponse())
     }
 
-    @PutMapping("/{id}")
+
+    //TODO: doesnt worj
+    @PatchMapping("/{id}")
     fun updateWorkoutExercise(
         @PathVariable id: UUID,
         @Valid @RequestBody request: UpdateWorkoutExerciseRequest
@@ -75,11 +81,12 @@ class WorkoutExerciseController(
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build()
         }
 
-        request.restSeconds?.let { existingWorkoutExercise.restSeconds = it }
 
         val updatedWorkoutExercise = workoutExerciseService.save(existingWorkoutExercise)
         return ResponseEntity.ok(updatedWorkoutExercise.toResponse())
     }
+
+    //TODO: doesnt work
 
     @DeleteMapping("/{id}")
     fun deleteWorkoutExercise(@PathVariable id: UUID): ResponseEntity<Void> {

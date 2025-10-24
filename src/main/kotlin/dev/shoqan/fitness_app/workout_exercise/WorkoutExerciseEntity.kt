@@ -26,9 +26,4 @@ class WorkoutExerciseEntity(
 
     @Column(nullable = false)
     var restSeconds: Int = 90,
-) : BaseEntity() {
-
-    fun getTotalVolume(): Double = sets.sumOf { it.weight * it.reps }
-
-    fun getTotalReps(): Int = sets.sumOf { it.reps }
-}
+) : BaseEntity()

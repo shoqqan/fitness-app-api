@@ -22,6 +22,4 @@ class SetEntity(
     @JoinColumn(name = "workout_exercise_id", nullable = false)
     var workoutExercise: WorkoutExerciseEntity,
 
-    @Column(nullable = false)
-    var orderIndex: Int = 0
 ) : BaseEntity()

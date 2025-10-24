@@ -29,13 +29,13 @@ class SetController(
         return ResponseEntity.ok(set.toResponse())
     }
 
-    @GetMapping("/workout-exercise/{workoutExerciseId}")
-    fun getSetsByWorkoutExerciseId(
-        @PathVariable workoutExerciseId: UUID
-    ): ResponseEntity<List<SetResponse>> {
-        val sets = setService.findByWorkoutExerciseIdOrderByOrderIndexAsc(workoutExerciseId)
-        return ResponseEntity.ok(sets.map { it.toResponse() })
-    }
+//    @GetMapping("/workout-exercise/{workoutExerciseId}")
+//    fun getSetsByWorkoutExerciseId(
+//        @PathVariable workoutExerciseId: UUID
+//    ): ResponseEntity<List<SetResponse>> {
+//        val sets = setService.findByWorkoutExerciseIdOrderByOrderIndexAsc(workoutExerciseId)
+//        return ResponseEntity.ok(sets.map { it.toResponse() })
+//    }
 
     @PostMapping
     fun createSet(@Valid @RequestBody request: CreateSetRequest): ResponseEntity<SetResponse> {
@@ -54,7 +54,6 @@ class SetController(
             workoutExercise = workoutExercise,
             weight = request.weight,
             reps = request.reps,
-            orderIndex = request.orderIndex
         )
 
         val savedSet = setService.save(set)
@@ -81,7 +80,6 @@ class SetController(
                 workoutExercise = workoutExercise,
                 weight = request.weight,
                 reps = request.reps,
-                orderIndex = request.orderIndex.takeIf { it >= 0 } ?: index
             )
         }
 
@@ -156,7 +154,6 @@ class SetController(
         weight = this.weight,
         reps = this.reps,
         workoutExerciseId = this.workoutExercise.id!!,
-        orderIndex = this.orderIndex,
         createdAt = this.createdAt!!,
         updatedAt = this.updatedAt!!
     )

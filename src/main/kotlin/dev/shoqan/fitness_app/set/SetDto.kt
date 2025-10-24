@@ -10,7 +10,6 @@ data class SetResponse(
     val workoutExerciseId: UUID,
     val weight: Double,
     val reps: Int,
-    val orderIndex: Int,
     val createdAt: OffsetDateTime,
     val updatedAt: OffsetDateTime
 )
@@ -24,9 +23,6 @@ data class CreateSetRequest(
 
     @field:Min(value = 0, message = "Reps cannot be negative")
     val reps: Int = 0,
-
-    @field:Min(value = 0, message = "Order index cannot be negative")
-    val orderIndex: Int
 )
 
 data class UpdateSetRequest(

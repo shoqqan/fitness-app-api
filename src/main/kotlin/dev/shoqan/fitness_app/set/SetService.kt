@@ -21,10 +21,6 @@ class SetService(
         return jpaRepository.findByWorkoutExerciseId(workoutExerciseId)
     }
 
-    fun findByWorkoutExerciseIdOrderByOrderIndexAsc(workoutExerciseId: UUID): List<SetEntity> {
-        return jpaRepository.findByWorkoutExerciseIdOrderByOrderIndexAsc(workoutExerciseId)
-    }
-
      fun save(set: SetEntity): SetEntity {
         return jpaRepository.save(set)
     }
